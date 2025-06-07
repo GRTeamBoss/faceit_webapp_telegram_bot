@@ -21,7 +21,7 @@ bot.help(async ctx => {
 })
 
 bot.command("faceit_nickname", async ctx => {
-  const faceitStats = await faceitAPI.getPlayerID(ctx.message.text.split()[1])
+  const faceitStats = await faceitAPI.getPlayerID(ctx.message.text.split(" ")[1])
   const img = faceitStats.avatar
   const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
   const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
@@ -30,7 +30,7 @@ bot.command("faceit_nickname", async ctx => {
 })
 
 bot.command("steam_nickname", async ctx => {
-  const steamID64 = (await steamAPI.getSteamIDviaNickname(ctx.message.text.split()[1])).id64
+  const steamID64 = (await steamAPI.getSteamIDviaNickname(ctx.message.text.split(" ")[1])).id64
   const faceitStats = await playerAPI.getPlayer(steamID64)
   const img = faceitStats.avatar
   const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
