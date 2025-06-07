@@ -30,7 +30,7 @@ bot.command("faceit_nickname", async ctx => {
 })
 
 bot.command("steam_nickname", async ctx => {
-  const steamID64 = (await steamAPI.getSteamIDviaNickname(ctx.message.text)).id64
+  const steamID64 = (await steamAPI.getSteamIDviaNickname(ctx.message.text.split()[1])).id64
   const faceitStats = await playerAPI.getPlayer(steamID64)
   const img = faceitStats.avatar
   const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
