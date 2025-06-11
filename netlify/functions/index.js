@@ -21,7 +21,8 @@ bot.help(async ctx => {
 })
 
 bot.command("faceit_nickname", async ctx => {
-  const faceitStats = await faceitAPI.getPlayerID(ctx.message.text.split(" ")[1])
+  const faceitInfo = await faceitAPI.getPlayerID(ctx.message.text.split(" ")[1])
+  const faceitStats = await playerAPI.getPlayer(faceitInfo.payload.platforms.steam.id64)
   const img = faceitStats.avatar
   const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
   const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
