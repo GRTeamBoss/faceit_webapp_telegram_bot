@@ -25,13 +25,13 @@ export class Faceit {
   }
 
   async getRequest(req) {
-    const resp = await fetch(req, {headers: this.header}).then(resp => {return resp.json()})
+    const resp = await fetch(req, {headers: this.header}).then(resp => {if (resp.status === 200) {return resp.json()} else {return false}})
     return resp
   }
 
   async getPlayerID(nickname) {
     const req = this.uriApi + "/" + nickname
-    const resp = await fetch(req).then(resp => {return resp.json()})
+    const resp = await fetch(req).then(resp => {if (resp.status === 200) {return resp.json()} else {return false}})
     return resp
   }
 
