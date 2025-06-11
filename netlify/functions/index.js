@@ -33,7 +33,7 @@ bot.command("faceit_nickname", async ctx => {
       const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
       const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
       const generalform = await formatLocal.faceitGeneral(faceitStats)
-      await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform), parse_mode: "HTML"})
+      await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
     }
   }
 })
@@ -54,7 +54,7 @@ bot.command("steam_nickname", async ctx => {
         const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
         const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
         const generalform = await formatLocal.faceitGeneral(faceitStats)
-        await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform), parse_mode: "HTML"})
+        await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
       }
     }
   }
@@ -73,7 +73,7 @@ bot.hears(/https\:\/\/steamcommunity\.com\/.+/, async ctx => {
       const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
       const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
       const generalform = await formatLocal.faceitGeneral(faceitStats)
-      await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform), parse_mode: "HTML"})
+      await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
     }
   }
 })
