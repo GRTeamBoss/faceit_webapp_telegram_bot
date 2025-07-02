@@ -30,8 +30,8 @@ bot.command("faceit_nickname", async ctx => {
     } else {
       const faceitStats = await playerAPI.getPlayer(faceitInfo.payload.platforms.steam.id64)
       const img = faceitStats.avatar
-      const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
-      const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
+      const cs2form = await formatLocal.cs2(faceitStats.games.cs2) || "CS2 history doesn't exist."
+      const csgoform = await formatLocal.csgo(faceitStats.games.csgo) || "CS:GO history doesn't exist."
       const generalform = await formatLocal.faceitGeneral(faceitStats)
       await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
     }
@@ -51,8 +51,8 @@ bot.command("steam_nickname", async ctx => {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} steam nickname not found on Faceit!`)
       } else {
         const img = faceitStats.avatar
-        const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
-        const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
+        const cs2form = await formatLocal.cs2(faceitStats.games.cs2) || "CS2 history doesn't exist."
+        const csgoform = await formatLocal.csgo(faceitStats.games.csgo) || "CS:GO history doesn't exist."
         const generalform = await formatLocal.faceitGeneral(faceitStats)
         await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
       }
@@ -70,8 +70,8 @@ bot.hears(/https\:\/\/steamcommunity\.com\/.+/, async ctx => {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} steam ID not found on Faceit!`)
     } else {
       const img = faceitStats.avatar
-      const cs2form = await formatLocal.cs2(faceitStats.games.cs2)
-      const csgoform = await formatLocal.csgo(faceitStats.games.csgo)
+      const cs2form = await formatLocal.cs2(faceitStats.games.cs2) || "CS2 history doesn't exist."
+      const csgoform = await formatLocal.csgo(faceitStats.games.csgo) || "CS:GO history doesn't exist."
       const generalform = await formatLocal.faceitGeneral(faceitStats)
       await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
     }

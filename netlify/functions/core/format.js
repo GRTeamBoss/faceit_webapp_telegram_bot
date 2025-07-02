@@ -5,13 +5,25 @@ export class Format {
   }
 
   async csgo(content) {
-    const res = `<b>CS:GO</b>\n<b>region</b>: ${content.region}\n<b>level</b>: ${content.skill_level}\n<b>ELO</b>: ${content.faceit_elo}\n<b>nickname</b>: ${content.game_player_name}\n`
-    return res
+    try
+    {
+      const res = `<b>CS:GO</b>\n<b>region</b>: ${content.region}\n<b>level</b>: ${content.skill_level}\n<b>ELO</b>: ${content.faceit_elo}\n<b>nickname</b>: ${content.game_player_name}\n`
+      return res
+    } catch (err) 
+    {
+      return false
+    }
   }
 
   async cs2(content) {
-    const res = `<b>CS 2</b>\n<b>region</b>: ${content.region}\n<b>level</b>: ${content.skill_level}\n<b>ELO</b>: ${content.faceit_elo}\n<b>nickname</b>: ${content.game_player_name}\n`
-    return res
+    try 
+    {
+      const res = `<b>CS 2</b>\n<b>region</b>: ${content.region}\n<b>level</b>: ${content.skill_level}\n<b>ELO</b>: ${content.faceit_elo}\n<b>nickname</b>: ${content.game_player_name}\n`
+      return res 
+    } catch (err) 
+    {
+      return false
+    }
   }
 
   async faceitGeneral(content) {
