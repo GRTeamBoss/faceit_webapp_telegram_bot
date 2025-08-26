@@ -6,18 +6,19 @@ class Faceit {
     this.apiKey = process.env.FACEIT_API_KEY
     this.fetchInstance = async (path, params = {}) => {
       const paramsQuery = new URLSearchParams(params).toString()
-      const res = await fetch(`https://open.faceit.com/data/v4${path}?${paramsQuery}`, {
+      const res = await fetch(`https://open.faceit.com/data/v4${path}${paramsQuery ? `?${paramsQuery}` : ""}`, {
         headers: {
           "Authorization": `Bearer ${this.apiKey}`
         }
       })
+      if (!res.ok) {return -1}
       return await res.json()
     }
   }
 
   async getRequest(endpoint, params = {}) {
       const response = await this.fetchInstance(endpoint, { ...params })
-      return response || -1
+      return response
   }
 }
 

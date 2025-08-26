@@ -13,7 +13,8 @@ class Steam {
     }
     this.fetchInstance = async (path, params = {}) => {
       const paramsQuery = new URLSearchParams({...this.params, ...params}).toString()
-      const res = await fetch(`https://api.steampowered.com${path}?${paramsQuery}`)
+      const res = await fetch(`https://api.steampowered.com${path}${paramsQuery ? `?${paramsQuery}` : ""}`)
+      if (!res.ok) {return -1}
       return await res.json()
     }
   }
