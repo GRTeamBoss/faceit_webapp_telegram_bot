@@ -1,5 +1,4 @@
 import { configDotenv } from "dotenv";
-import axios from "axios"
 
 class Faceit {
   constructor() {
@@ -11,10 +10,19 @@ class Faceit {
         "Authorization": `Bearer ${this.apiKey}`
       }
     })
+    this.fetchInstance = async (path, params = {}) => {
+      const res = await fetch(`https://open.faceit.com/data/v4${path}`, {
+        headers: {
+          "Authorization": `Bearer ${this.apiKey}`
+        },
+        params: {...params}
+      })
+      return res.json()
+    }
   }
 
-  async getRequest(endpoint) {
-      const response = await this.axiosInstance.get(endpoint)
+  async getRequest(endpoint, params = {}) {
+      const response = await this.fetchInstance(endpoint, { ...params })
       return response.data || -1
   }
 }
@@ -26,15 +34,11 @@ export class PlayersAPI extends Faceit {
   }
 
   async getPlayerviaNickname(nickname) {
-    this.axiosInstance.defaults.params.nickname = nickname
-    this.axiosInstance.defaults.params.game = "cs2"
-    return await this.getRequest(`/players`)
+    return await this.getRequest(`/players`, {nickname: nickname, game: "cs2"})
   }
 
   async getPlayerviaSteamID(steamID64) {
-    this.axiosInstance.defaults.params.game_player_id = steamID64
-    this.axiosInstance.defaults.params.game = "cs2"
-    return await this.getRequest(`/players`)
+    return await this.getRequest(`/players`, {game_player_id: steamID64, game: "cs2"})
   }
 
   async getPlayerviaPlayerID(playerID) {
@@ -46,9 +50,7 @@ export class PlayersAPI extends Faceit {
   }
 
   async getPlayerStatistics(data) {
-    this.axiosInstance.defaults.params.game = "cs2"
-    this.axiosInstance.defaults.params.limit = "100"
-    return await this.getRequest(`/players/${data.player_id}/history`)
+    return await this.getRequest(`/players/${data.player_id}/history`, {game: "cs2", limit: "100"})
   }
 }
 

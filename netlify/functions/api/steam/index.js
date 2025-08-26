@@ -1,5 +1,4 @@
 import { configDotenv } from "dotenv"
-import axios from "axios"
 
 class Steam {
   /**
@@ -12,14 +11,14 @@ class Steam {
     this.params = {
       key: this.apiKey,
     }
-    this.axiosInstance = axios.create({
-      baseURL: "https://api.steampowered.com",
-      params: this.params
-    })
+    this.fetchInstance = async (path, params = {}) => {
+      const res = await fetch(`https://api.steampowered.com${path}`, {params: {...this.params, ...params}})
+      return res.json()
+    }
   }
 
-  async getRequest(req) {
-    const resp = await this.axiosInstance.get(req)
+  async getRequest(req, params = {}) {
+    const resp = await this.fetchInstance(req, params)
     return resp.data
   }
 }
@@ -40,36 +39,27 @@ export class SteamAPIv1 extends Steam {
      */
 
     const req = `/ISteamUser/ResolveVanityURL/v0001/`
-    this.axiosInstance.defaults.params.vanityurl = nickname
-    const resp = await this.getRequest(req)
+    const resp = await this.getRequest(req, {vanityurl: nickname})
     if (resp.response.success === 42) return -1
     return resp.response.steamid
   }
 
   async getFriendList(steamid, relationship="all") {
     const req = `/ISteamUser/GetFriendList/v0001/`
-    this.axiosInstance.defaults.params.relationship = relationship
-    this.axiosInstance.defaults.params.steamid = steamid
-    const resp = await this.getRequest(req)
+    const resp = await this.getRequest(req, {relationship: relationship, steamid: steamid})
     return resp.friendslist || -1
   }
 
   async getRecentlyPlayedGames(steamid, count=5) {
     const req = `/IPlayerService/GetRecentlyPlayedGames/v0001/`
-    this.axiosInstance.defaults.params.steamid = steamid
-    this.axiosInstance.defaults.params.count = count
-    const resp = await this.getRequest(req)
+    const resp = await this.getRequest(req, {steamid: steamid, count: count})
     return resp.response || -1
   }
 
   async getOwnedGames(steamid, include_appinfo=true, include_played_free_games=true, appids_filter=[]) {
     const filter = Array.isArray(appids_filter) && appids_filter.length > 0 ? `&appids_filter=${appids_filter.join(",")}` : ""
     const req = `/IPlayerService/GetOwnedGames/v0001/`
-    this.axiosInstance.defaults.params.steamid = steamid
-    this.axiosInstance.defaults.params.include_appinfo = include_appinfo
-    this.axiosInstance.defaults.params.include_played_free_games = include_played_free_games
-    this.axiosInstance.defaults.params.appids_filter = filter
-    const resp = await this.getRequest(req)
+    const resp = await this.getRequest(req, {steamid: steamid, include_appinfo: include_appinfo, include_played_free_games: include_played_free_games, appids_filter: filter})
     return resp.response || -1
   }
 }
@@ -85,8 +75,7 @@ export class SteamAPIv2 extends Steam {
   async getPlayerSummaries(steamids) {
     const ids = Array.isArray(steamids) ? steamids.join(",") : steamids
     const req = `/ISteamUser/GetPlayerSummaries/v0002/`
-    this.axiosInstance.defaults.params.steamids = ids
-    const resp = await this.getRequest(req)
+    const resp = await this.getRequest(req, {steamids: ids})
     return resp.response.players
   }
 }
