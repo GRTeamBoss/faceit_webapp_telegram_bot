@@ -3,7 +3,7 @@ import { configDotenv } from "dotenv";
 class Faceit {
   constructor() {
     configDotenv()
-    this.apiKey = process.env.FACEIT_API_KEY
+    this.apiKey = process.env.FACEIT_API_TOKEN
     this.fetchInstance = async (path, params = {}) => {
       const paramsQuery = new URLSearchParams(params).toString()
       const res = await fetch(`https://open.faceit.com/data/v4${path}${paramsQuery ? `?${paramsQuery}` : ""}`, {
