@@ -131,19 +131,12 @@ export class Faceit extends Format {
   async statsForMatches() {
     try {
       let res = `**Stats for Matches**\n`
-      const kills = []
-      const deaths = []
-      const rounds = []
       const duration = []
       for (let match of this.content.items) {
-        match = match.stats
         // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
-        kills.push(Number(match.kills))
-        deaths.push(Number(match.deaths))
-        rounds.push(Number(match.rounds))
         duration.push((Number(match.match_finished_at)*1000-Number(match.created_at)*1000)/60)
       }
-      res += `**Average Kills**: ${(kills.reduce((a, b) => a + b, 0)) / kills.length}\n**Average Deaths**: ${(deaths.reduce((a, b) => a + b, 0)) / deaths.length}\n**Average Rounds**: ${(rounds.reduce((a, b) => a + b, 0)) / rounds.length}\n**Average Duration**: ${(duration.reduce((a, b) => a + b, 0)) / duration.length} minutes\n\n`
+      res += `**Average Duration**: ${(duration.reduce((a, b) => a + b, 0)) / duration.length} minutes\n\n`
       return res
     } catch (err) {
       return "No match stats found or profile is private.\n"
