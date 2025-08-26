@@ -57,17 +57,17 @@ bot.command("steam_player_info", async ctx => {
   if (ctx.message.text.split(" ").slice(1).length > 1) {
     await ctx.reply(`/steam_player_info ${ctx.message.text.split(" ").slice(1).join("")} - without space!`)
   } else {
-    const steamID64 = (await steamAPI.v1.getPlayerSteamID64(ctx.message.text.split(" ")[1]))
-    if (steamID64 === -1) {
-      await ctx.reply(`${ctx.message.text.split(" ")[1]} steam nickname not found!\n Trying to find if this SteamID64.`)
+    const steamID64 = await steamAPI.v1.getPlayerSteamID64(ctx.message.text.split(" ")[1])
+    const data = await steamAPI.v2.getPlayerSummaries(ctx.message.text.split(" ")[1])
+    if (steamID64 !== -1) {
+      const playerData = await steamAPI.v2.getPlayerSummaries(steamID64)
+      const result = await formatLocal(playerData).playerSummaries()
+      await ctx.replyWithPhoto({url: playerData.avatar}, {caption: String(result)})
+    } else if (data !== -1) {
+      const result = await formatLocal(data).playerSummaries()
+      await ctx.replyWithPhoto({url: data.avatar}, {caption: String(result)})
     } else {
-      const data = await steamAPI.v2.getPlayerSummaries(steamID64)
-      if (data === -1) {
-        await ctx.reply(`${ctx.message.text.split(" ")[1]} steam profile not found on Steam!`)
-      } else {
-        const playerInfo = await formatLocal(data).playerSummaries()
-        await ctx.reply(String(playerInfo))
-      }
+      await ctx.reply(`${ctx.message.text.split(" ")[1]} steam profile not found on Steam!`)
     }
   }
 })
