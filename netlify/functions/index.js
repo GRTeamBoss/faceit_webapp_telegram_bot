@@ -273,7 +273,7 @@ bot.hears(/https\:\/\/steamcommunity\.com\/.+/, async ctx => {
 
 exports.handler = async function(event, context) {
   await bot.handleUpdate(JSON.parse(event.body))
-  return {statusCode: 200, body: ""}
+  return {statusCode: 200, body: "OK"}
 }
 
 // bot.launch()
