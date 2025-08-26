@@ -21,7 +21,6 @@ class Steam {
 
   async getRequest(req, params = {}) {
     const resp = await this.fetchInstance(req, params)
-    console.log(resp)
     return resp
   }
 }
