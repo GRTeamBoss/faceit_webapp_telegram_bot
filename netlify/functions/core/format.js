@@ -102,7 +102,7 @@ export class Faceit extends Format {
       let res = `**General**\n**STEAM ID64**: ${this.content.steam_id_64}\n**STEAM nickname**: ${this.content.steam_nickname}\n**FACEIT**: ${this.content.faceit_url.replace("{lang}", this.content.settings.language)}\n**Joined at**: ${this.content.activated_at}\n`
       return res
     } catch (err) {
-      return "User not found."
+      return "User not found.\n"
     }
   }
 
@@ -124,7 +124,7 @@ export class Faceit extends Format {
       res += `**Average Kills**: ${kills.reduce((a, b) => a + b, 0) / kills.length}\n**Average Deaths**: ${deaths.reduce((a, b) => a + b, 0) / deaths.length}\n**Average Rounds**: ${rounds.reduce((a, b) => a + b, 0) / rounds.length}\n**Average Duration**: ${duration.reduce((a, b) => a + b, 0) / duration.length} minutes\n\n`
       return res
     } catch (err) {
-      return "No match stats found or profile is private."
+      return "No match stats found or profile is private.\n"
     }
   }
 
@@ -146,7 +146,7 @@ export class Faceit extends Format {
       res += `**Average Kills**: ${kills.reduce((a, b) => a + b, 0) / kills.length}\n**Average Deaths**: ${deaths.reduce((a, b) => a + b, 0) / deaths.length}\n**Average Rounds**: ${rounds.reduce((a, b) => a + b, 0) / rounds.length}\n**Average Duration**: ${duration.reduce((a, b) => a + b, 0) / duration.length} minutes\n\n`
       return res
     } catch (err) {
-      return "No match stats found or profile is private."
+      return "No match stats found or profile is private.\n"
     }
   }
 
@@ -158,7 +158,7 @@ export class Faceit extends Format {
       }
       return res
     } catch (err) {
-      return "No ranking data found."
+      return "No ranking data found.\n"
     }
   }
 
@@ -169,7 +169,7 @@ export class Faceit extends Format {
       res += `${player.position}. **Player**: ${player.nickname} - ${player.faceit_elo}\n`
       return res
     } catch (err) {
-      return "No ranking data found."
+      return "No ranking data found.\n"
     }
   }
 }

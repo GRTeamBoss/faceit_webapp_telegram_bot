@@ -139,8 +139,8 @@ bot.command("faceit_nickname", async ctx => {
     if (data === -1) {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit nickname not found!`)
     } else {
-      const cs2 = await formatLocal(data).cs2()
-      const csgo = await formatLocal(data).csgo()
+      const cs2 = await formatLocal(data.games.cs2).cs2()
+      const csgo = await formatLocal(data.games.csgo).csgo()
       const faceitGeneral = await formatLocal(data).faceitGeneral()
       await ctx.replyWithPhoto({url: data.avatar}, {caption: String(faceitGeneral + cs2 + csgo)})
     }
@@ -155,8 +155,8 @@ bot.command("faceit_id", async ctx => {
     if (data === -1) {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit ID not found!`)
     } else {
-      const cs2 = await formatLocal(data).cs2()
-      const csgo = await formatLocal(data).csgo()
+      const cs2 = await formatLocal(data.games.cs2).cs2()
+      const csgo = await formatLocal(data.games.csgo).csgo()
       const faceitGeneral = await formatLocal(data).faceitGeneral()
       await ctx.replyWithPhoto({url: data.avatar}, {caption: String(faceitGeneral + cs2 + csgo)})
     }
