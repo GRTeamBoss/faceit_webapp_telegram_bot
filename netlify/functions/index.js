@@ -28,7 +28,7 @@ const formatLocal = (content) => {
     csgo: () => faceit.csgo(),
     cs2: () => faceit.cs2(),
     faceitGeneral: () => faceit.faceitGeneral(),
-    statsFor20Matches: () => faceit.statsFor20Matches(),
+    statsFor20matches: () => faceit.statsFor20matches(),
     statsForMatches: () => faceit.statsForMatches(),
     rankings: () => faceit.rankings(),
     rankOfPlayer: () => faceit.rankOfPlayer()
@@ -171,18 +171,21 @@ bot.command("faceit_recent_matches", async ctx => {
   if (ctx.message.text.split(" ").slice(1).length > 1) {
     await ctx.reply(`/faceit_recent_matches ${ctx.message.text.split(" ").slice(1).join("")} - without space!`)
   } else {
-    const data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
+    let data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
     if (data === -1) {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit nickname not found!`)
-    } else {
-      const data = await faceitAPI.players.getPlayerviaID(data.faceit_id)
+      data = await faceitAPI.players.getPlayerviaID(ctx.message.text.split(" ")[1])
       if (data === -1) {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit ID not found!`)
       } else {
         const recentMatches = await faceitAPI.players.getPlayerStatisticsFor20matches(data)
-        const stats = await formatLocal(recentMatches).statsFor20Matches()
+        const stats = await formatLocal(recentMatches).statsFor20matches()
         await ctx.reply(String(stats))
       }
+    } else {
+      const recentMatches = await faceitAPI.players.getPlayerStatisticsFor20matches(data)
+      const stats = await formatLocal(recentMatches).statsFor20matches()
+      await ctx.reply(String(stats))
     }
   }
 })
@@ -191,11 +194,10 @@ bot.command("faceit_history", async ctx => {
   if (ctx.message.text.split(" ").slice(1).length > 1) {
     await ctx.reply(`/faceit_history ${ctx.message.text.split(" ").slice(1).join("")} - without space!`)
   } else {
-    const data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
+    let data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
     if (data === -1) {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit nickname not found!`)
-    } else {
-      const data = await faceitAPI.players.getPlayerviaID(data.faceit_id)
+      data = await faceitAPI.players.getPlayerviaID(ctx.message.text.split(" ")[1])
       if (data === -1) {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit ID not found!`)
       } else {
@@ -203,6 +205,10 @@ bot.command("faceit_history", async ctx => {
         const stats = await formatLocal(history).statsForMatches()
         await ctx.reply(String(stats))
       }
+    } else {
+      const history = await faceitAPI.players.getPlayerMatchHistory(data)
+      const stats = await formatLocal(history).statsForMatches()
+      await ctx.reply(String(stats))
     }
   }
 })
