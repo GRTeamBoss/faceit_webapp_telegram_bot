@@ -5,11 +5,11 @@ class Faceit {
     configDotenv()
     this.apiKey = process.env.FACEIT_API_KEY
     this.fetchInstance = async (path, params = {}) => {
-      const res = await fetch(`https://open.faceit.com/data/v4${path}`, {
+      const paramsQuery = new URLSearchParams(params).toString()
+      const res = await fetch(`https://open.faceit.com/data/v4${path}?${paramsQuery}`, {
         headers: {
           "Authorization": `Bearer ${this.apiKey}`
-        },
-        params: {...params}
+        }
       })
       return res.json()
     }
