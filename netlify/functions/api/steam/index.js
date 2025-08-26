@@ -20,7 +20,7 @@ class Steam {
 
   async getRequest(req, params = {}) {
     const resp = await this.fetchInstance(req, params)
-    return resp.data
+    return resp
   }
 }
 

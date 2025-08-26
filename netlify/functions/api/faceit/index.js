@@ -17,7 +17,7 @@ class Faceit {
 
   async getRequest(endpoint, params = {}) {
       const response = await this.fetchInstance(endpoint, { ...params })
-      return response.data || -1
+      return response || -1
   }
 }
 
