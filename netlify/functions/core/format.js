@@ -109,10 +109,10 @@ export class Faceit extends Format {
   async statsFor20matches() {
     try {
       let res = `**Stats for Last 20 Matches**\n`
-      const kills = []
-      const deaths = []
-      const rounds = []
-      const duration = []
+      let kills = []
+      let deaths = []
+      let rounds = []
+      let duration = []
       for (let match of this.content.items) {
         let currentMatch = match.stats
         // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
@@ -131,7 +131,7 @@ export class Faceit extends Format {
   async statsForMatches() {
     try {
       let res = `**Stats for Matches**\n`
-      const duration = []
+      let duration = []
       for (let match of this.content.items) {
         // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
         duration.push((Number(match.match_finished_at)*1000-Number(match.created_at)*1000)/60)
