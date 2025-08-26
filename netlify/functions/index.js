@@ -135,14 +135,18 @@ bot.command("faceit_nickname", async ctx => {
   if (ctx.message.text.split(" ").slice(1).length > 1) {
     await ctx.reply(`/faceit_nickname ${ctx.message.text.split(" ").slice(1).join("")} - without space!`)
   } else {
-    const data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
-    if (data === -1) {
-      await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit nickname not found!`)
+    if (ctx.message.text.split(" ").length === 1) {
+      await ctx.reply(`Faceit nickname must be not empty.`)
     } else {
-      const cs2 = await formatLocal(data.games.cs2).cs2()
-      const csgo = await formatLocal(data.games.csgo).csgo()
-      const faceitGeneral = await formatLocal(data).faceitGeneral()
-      await ctx.replyWithPhoto({url: data.avatar}, {caption: String(faceitGeneral + cs2 + csgo)})
+      const data = await faceitAPI.players.getPlayerviaNickname(ctx.message.text.split(" ")[1])
+      if (data === -1) {
+        await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit nickname not found!`)
+      } else {
+        const cs2 = await formatLocal(data.games.cs2).cs2()
+        const csgo = await formatLocal(data.games.csgo).csgo()
+        const faceitGeneral = await formatLocal(data).faceitGeneral()
+        await ctx.replyWithPhoto({url: data.avatar}, {caption: String(faceitGeneral + cs2 + csgo)})
+      }
     }
   }
 })
