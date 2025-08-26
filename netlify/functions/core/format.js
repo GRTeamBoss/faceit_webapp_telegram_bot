@@ -115,11 +115,11 @@ export class Faceit extends Format {
       const duration = []
       for (let match of this.content.items) {
         match = match.stats
-        res += `**Match ID**: ${match["Match Id"]}\n**Map**: ${match.Map}\n**Score**: ${match.Score}\n**Result**: ${1 === match.Result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.Kills}\n**Deaths**: ${match.Deaths}\n**Assists**: ${match.Assists}\n**ADR**: ${match.ADR}\n**K/D Ratio**: ${match.Kills / match.Deaths}\n**K/R Ratio**: ${match.Kills / match.Rounds}\n**Double Kills**: ${match["Double Kills"]}\n**Triple Kills**: ${match["Triple Kills"]}\n**Quadro Kills**: ${match["Quadro Kills"]}\n**Penta Kills**: ${match["Penta Kills"]}\n**Duration**: ${(match["Match Finished At"]*1000-match["Created At"]*1000)/60} minutes\n\n`
-        kills.push(match.Kills)
-        deaths.push(match.Deaths)
-        rounds.push(match.Rounds)
-        duration.push((match["Match Finished At"]*1000-match["Created At"]*1000)/60)
+        res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
+        kills.push(match.kills)
+        deaths.push(match.deaths)
+        rounds.push(match.rounds)
+        duration.push((match.match_finished_at*1000-match.created_at*1000)/60)
       }
       res += `**Average Kills**: ${kills.reduce((a, b) => a + b, 0) / kills.length}\n**Average Deaths**: ${deaths.reduce((a, b) => a + b, 0) / deaths.length}\n**Average Rounds**: ${rounds.reduce((a, b) => a + b, 0) / rounds.length}\n**Average Duration**: ${duration.reduce((a, b) => a + b, 0) / duration.length} minutes\n\n`
       return res
@@ -137,11 +137,11 @@ export class Faceit extends Format {
       const duration = []
       for (let match of this.content.items) {
         match = match.stats
-        res += `**Match ID**: ${match["Match Id"]}\n**Map**: ${match.Map}\n**Score**: ${match.Score}\n**Result**: ${1 === match.Result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.Kills}\n**Deaths**: ${match.Deaths}\n**Assists**: ${match.Assists}\n**ADR**: ${match.ADR}\n**K/D Ratio**: ${match.Kills / match.Deaths}\n**K/R Ratio**: ${match.Kills / match.Rounds}\n**Double Kills**: ${match["Double Kills"]}\n**Triple Kills**: ${match["Triple Kills"]}\n**Quadro Kills**: ${match["Quadro Kills"]}\n**Penta Kills**: ${match["Penta Kills"]}\n**Duration**: ${(match["Match Finished At"]*1000-match["Created At"]*1000)/60} minutes\n\n`
-        kills.push(match.Kills)
-        deaths.push(match.Deaths)
-        rounds.push(match.Rounds)
-        duration.push((match["Match Finished At"]*1000-match["Created At"]*1000)/60)
+        res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
+        kills.push(match.kills)
+        deaths.push(match.deaths)
+        rounds.push(match.rounds)
+        duration.push((match.match_finished_at*1000-match.created_at*1000)/60)
       }
       res += `**Average Kills**: ${kills.reduce((a, b) => a + b, 0) / kills.length}\n**Average Deaths**: ${deaths.reduce((a, b) => a + b, 0) / deaths.length}\n**Average Rounds**: ${rounds.reduce((a, b) => a + b, 0) / rounds.length}\n**Average Duration**: ${duration.reduce((a, b) => a + b, 0) / duration.length} minutes\n\n`
       return res

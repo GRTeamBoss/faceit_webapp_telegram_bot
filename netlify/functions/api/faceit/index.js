@@ -18,7 +18,6 @@ class Faceit {
 
   async getRequest(endpoint, params = {}) {
       const response = await this.fetchInstance(endpoint, params)
-      console.log(response)
       return response
   }
 }
