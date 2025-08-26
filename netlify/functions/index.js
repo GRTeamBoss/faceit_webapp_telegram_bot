@@ -61,7 +61,7 @@ bot.command("steam_player_info", async ctx => {
     if (steamID64 === -1) {
       await ctx.reply(`${ctx.message.text.split(" ")[1]} steam nickname not found!\n Trying to find if this SteamID64.`)
     } else {
-      const data = await steamAPI.v1.getPlayerInfo(steamID64)
+      const data = await steamAPI.v2.getPlayerSummaries(steamID64)
       if (data === -1) {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} steam profile not found on Steam!`)
       } else {
