@@ -1,11 +1,11 @@
 import { configDotenv } from "dotenv";
-import { Axios } from "axios";
+import axios from "axios";
 
 class Faceit {
   constructor() {
     configDotenv()
     this.apiKey = process.env.FACEIT_API_KEY
-    this.axiosInstance = Axios.create({
+    this.axiosInstance = axios.create({
       baseURL: "https://open.faceit.com/data/v4",
       headers: {
         "Authorization": `Bearer ${this.apiKey}`

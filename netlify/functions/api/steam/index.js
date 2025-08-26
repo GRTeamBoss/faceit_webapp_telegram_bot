@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv"
-import { Axios } from "axios"
+import axios from "axios"
 
 class Steam {
   /**
@@ -12,7 +12,7 @@ class Steam {
     this.params = {
       key: this.apiKey,
     }
-    this.axiosInstance = Axios.create({
+    this.axiosInstance = axios.create({
       baseURL: "https://api.steampowered.com",
       params: this.params
     })
