@@ -201,12 +201,12 @@ bot.command("faceit_history", async ctx => {
       if (data === -1) {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} faceit ID not found!`)
       } else {
-        const history = await faceitAPI.players.getPlayerMatchHistory(data)
+        const history = await faceitAPI.players.getPlayerStatistics(data)
         const stats = await formatLocal(history).statsForMatches()
         await ctx.reply(String(stats))
       }
     } else {
-      const history = await faceitAPI.players.getPlayerMatchHistory(data)
+      const history = await faceitAPI.players.getPlayerStatistics(data)
       const stats = await formatLocal(history).statsForMatches()
       await ctx.reply(String(stats))
     }
