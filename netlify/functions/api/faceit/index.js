@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-const axios = require("axios")
+import axios from "axios"
 
 class Faceit {
   constructor() {
@@ -19,7 +19,7 @@ class Faceit {
   }
 }
 
-class PlayersAPI extends Faceit {
+export class PlayersAPI extends Faceit {
 
   constructor() {
     super()
@@ -52,7 +52,7 @@ class PlayersAPI extends Faceit {
   }
 }
 
-class RankingsAPI extends Faceit {
+export class RankingsAPI extends Faceit {
 
   constructor() {
     super()

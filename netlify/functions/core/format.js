@@ -6,7 +6,7 @@ class Format {
   }
 }
 
-class Steam extends Format {
+export class Steam extends Format {
   constructor(content) {
     super(content)
   }
@@ -70,7 +70,7 @@ class Steam extends Format {
   }
 }
 
-class Faceit extends Format {
+export class Faceit extends Format {
   constructor(content) {
     super(content)
   }
@@ -78,7 +78,7 @@ class Faceit extends Format {
   async csgo() {
     try
     {
-      const res = `**CS:GO**\n**region**: ${this.content.region}\n**level**: ${this.content.skill_level}\n**ELO**: ${this.content.faceit_elo}\n**nickname**: ${this.content.game_player_name}\n`
+      let res = `**CS:GO**\n**region**: ${this.content.region}\n**level**: ${this.content.skill_level}\n**ELO**: ${this.content.faceit_elo}\n**nickname**: ${this.content.game_player_name}\n`
       return res
     } catch (err) 
     {
@@ -89,7 +89,7 @@ class Faceit extends Format {
   async cs2() {
     try
     {
-      const res = `**CS 2**\n**region**: ${this.content.region}\n**level**: ${this.content.skill_level}\n**ELO**: ${this.content.faceit_elo}\n**nickname**: ${this.content.game_player_name}\n`
+      let res = `**CS 2**\n**region**: ${this.content.region}\n**level**: ${this.content.skill_level}\n**ELO**: ${this.content.faceit_elo}\n**nickname**: ${this.content.game_player_name}\n`
       return res
     } catch (err)
     {
@@ -99,7 +99,7 @@ class Faceit extends Format {
 
   async faceitGeneral() {
     try {
-      const res = `**General**\n**STEAM ID64**: ${this.content.steam_id_64}\n**STEAM nickname**: ${this.content.steam_nickname}\n**FACEIT**: ${this.content.faceit_url.replace("{lang}", this.content.settings.language)}\n**Joined at**: ${this.content.activated_at}\n`
+      let res = `**General**\n**STEAM ID64**: ${this.content.steam_id_64}\n**STEAM nickname**: ${this.content.steam_nickname}\n**FACEIT**: ${this.content.faceit_url.replace("{lang}", this.content.settings.language)}\n**Joined at**: ${this.content.activated_at}\n`
       return res
     } catch (err) {
       return "User not found."
@@ -108,12 +108,12 @@ class Faceit extends Format {
 
   async statsFor20matches() {
     try {
-      const res = `**Stats for Last 20 Matches**\n`
+      let res = `**Stats for Last 20 Matches**\n`
       const kills = []
       const deaths = []
       const rounds = []
       const duration = []
-      for (const match of this.content.items) {
+      for (let match of this.content.items) {
         match = match.stats
         res += `**Match ID**: ${match["Match Id"]}\n**Map**: ${match.Map}\n**Score**: ${match.Score}\n**Result**: ${1 === match.Result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.Kills}\n**Deaths**: ${match.Deaths}\n**Assists**: ${match.Assists}\n**ADR**: ${match.ADR}\n**K/D Ratio**: ${match.Kills / match.Deaths}\n**K/R Ratio**: ${match.Kills / match.Rounds}\n**Double Kills**: ${match["Double Kills"]}\n**Triple Kills**: ${match["Triple Kills"]}\n**Quadro Kills**: ${match["Quadro Kills"]}\n**Penta Kills**: ${match["Penta Kills"]}\n**Duration**: ${(match["Match Finished At"]*1000-match["Created At"]*1000)/60} minutes\n\n`
         kills.push(match.Kills)
@@ -130,12 +130,12 @@ class Faceit extends Format {
 
   async statsForMatches() {
     try {
-      const res = `**Stats for Matches**\n`
+      let res = `**Stats for Matches**\n`
       const kills = []
       const deaths = []
       const rounds = []
       const duration = []
-      for (const match of this.content.items) {
+      for (let match of this.content.items) {
         match = match.stats
         res += `**Match ID**: ${match["Match Id"]}\n**Map**: ${match.Map}\n**Score**: ${match.Score}\n**Result**: ${1 === match.Result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.Kills}\n**Deaths**: ${match.Deaths}\n**Assists**: ${match.Assists}\n**ADR**: ${match.ADR}\n**K/D Ratio**: ${match.Kills / match.Deaths}\n**K/R Ratio**: ${match.Kills / match.Rounds}\n**Double Kills**: ${match["Double Kills"]}\n**Triple Kills**: ${match["Triple Kills"]}\n**Quadro Kills**: ${match["Quadro Kills"]}\n**Penta Kills**: ${match["Penta Kills"]}\n**Duration**: ${(match["Match Finished At"]*1000-match["Created At"]*1000)/60} minutes\n\n`
         kills.push(match.Kills)
@@ -152,7 +152,7 @@ class Faceit extends Format {
 
   async rankings() {
     try {
-      const res = `**Rankings**\n`
+      let res = `**Rankings**\n`
       for (const player of this.content.items) {
         res += `${player.position}. **Player**: ${player.nickname} - ${player.faceit_elo}\n`
       }
@@ -164,7 +164,7 @@ class Faceit extends Format {
 
   async rankOfPlayer() {
     try {
-      const res = `**Rank of Player**\n`
+      let res = `**Rank of Player**\n`
       const player = this.content.items[0]
       res += `${player.position}. **Player**: ${player.nickname} - ${player.faceit_elo}\n`
       return res

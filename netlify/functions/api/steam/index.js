@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv"
-const axios = require("axios")
+import axios from "axios"
 
 class Steam {
   /**
@@ -24,7 +24,7 @@ class Steam {
   }
 }
 
-class SteamAPIv1 extends Steam {
+export class SteamAPIv1 extends Steam {
   /**
    * Steam API v1 client for interacting with the Steam Web API.
    */
@@ -74,7 +74,7 @@ class SteamAPIv1 extends Steam {
   }
 }
 
-class SteamAPIv2 extends Steam {
+export class SteamAPIv2 extends Steam {
   /**
    * Steam API v2 client for interacting with the Steam Web API.
    */

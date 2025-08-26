@@ -215,10 +215,10 @@ bot.command("faceit_ranking", async ctx => {
 })
 
 bot.command("faceit_player_rank", async ctx => {
-  const {game, region, playerId} = ctx.message.text.split(" ").slice(1,4)
+  let {game, region, playerId} = ctx.message.text.split(" ").slice(1,4)
   if (playerId.contains("https://steamcommunity.com/")) {
     playerId = playerId.split("/").slice(-1)
-    const data = await faceitAPI.players.getPlayerviaID(playerId)
+    let data = await faceitAPI.players.getPlayerviaID(playerId)
     if (data === -1) {
       await ctx.reply(`${playerId} steam ID not found!`)
     } else {
@@ -228,7 +228,7 @@ bot.command("faceit_player_rank", async ctx => {
     }
   } else if (playerId.contains("https://www.faceit.com/")) {
     playerId = playerId.split("/").slice(-1)
-    const data = await faceitAPI.players.getPlayerviaNickname(playerId)
+    let data = await faceitAPI.players.getPlayerviaNickname(playerId)
     if (data === -1) {
       await ctx.reply(`${playerId} faceit nickname not found!`)
     } else {
@@ -237,7 +237,7 @@ bot.command("faceit_player_rank", async ctx => {
       await ctx.reply(String(result))
     }
   } else {
-    const data = await faceitAPI.players.getPlayerviaID(playerId)
+    let data = await faceitAPI.players.getPlayerviaID(playerId)
     if (data === -1) {
       await ctx.reply(`${playerId} faceit ID not found!`)
     } else {
