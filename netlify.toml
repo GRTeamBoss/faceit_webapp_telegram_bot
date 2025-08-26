@@ -1,7 +1,5 @@
 [functions]
   node_bundler = "esbuild"
 
-[functions."api"."faceit"."index"]
-  external_node_modules = ["axios"]
-[functions."api"."steam"."index"]
+[functions."index"]
   external_node_modules = ["axios"]
