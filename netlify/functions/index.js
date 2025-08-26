@@ -65,7 +65,7 @@ bot.command("steam_player_info", async ctx => {
       if (data === -1) {
         await ctx.reply(`${ctx.message.text.split(" ")[1]} steam profile not found on Steam!`)
       } else {
-        const playerInfo = await formatLocal(data).playerInfo()
+        const playerInfo = await formatLocal(data).playerSummaries()
         await ctx.reply(String(playerInfo))
       }
     }
