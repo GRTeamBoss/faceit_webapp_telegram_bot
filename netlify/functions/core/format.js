@@ -115,7 +115,7 @@ export class Faceit extends Format {
       const duration = []
       for (let match of this.content.items) {
         match = match.stats
-        res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
+        // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
         kills.push(match.kills)
         deaths.push(match.deaths)
         rounds.push(match.rounds)
@@ -137,7 +137,7 @@ export class Faceit extends Format {
       const duration = []
       for (let match of this.content.items) {
         match = match.stats
-        res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
+        // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
         kills.push(match.kills)
         deaths.push(match.deaths)
         rounds.push(match.rounds)
