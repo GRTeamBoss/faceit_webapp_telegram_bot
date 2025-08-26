@@ -31,7 +31,7 @@ export class Steam extends Format {
     try
     {
       let res = `**Played Games**\n\n`
-      for (const game of this.content.playedGames) {
+      for (const game of this.content.games) {
         res += `**Game**: ${game.name}\n**Hours Played in 2 weeks**: ${game.playtime_2weeks} minutes\n\n`
       }
       return res
@@ -59,7 +59,7 @@ export class Steam extends Format {
     try
     {
       let res = `**Player Summaries**\n`
-      for (const player of this.content.player_summaries) {
+      for (const player of this.content.player) {
         res += `**Player**: ${player.personaname}\n**Steam ID64**: ${player.steamid}\n**Profile URL**: ${player.profileurl}\n**Last time was online**: ${new Date(player.lastlogoff * 1000).toLocaleDateString("en-US")}\n\n`
       }
       return res

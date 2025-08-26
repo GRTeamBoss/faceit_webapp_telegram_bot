@@ -50,20 +50,20 @@ export class SteamAPIv1 extends Steam {
   async getFriendList(steamid, relationship="all") {
     const req = `/ISteamUser/GetFriendList/v0001/`
     const resp = await this.getRequest(req, {relationship: relationship, steamid: steamid})
-    return resp.friendslist || -1
+    return resp.friendslist
   }
 
   async getRecentlyPlayedGames(steamid, count=5) {
     const req = `/IPlayerService/GetRecentlyPlayedGames/v0001/`
     const resp = await this.getRequest(req, {steamid: steamid, count: count})
-    return resp.response || -1
+    return resp.response
   }
 
   async getOwnedGames(steamid, include_appinfo=true, include_played_free_games=true, appids_filter=[]) {
     const filter = Array.isArray(appids_filter) && appids_filter.length > 0 ? `&appids_filter=${appids_filter.join(",")}` : ""
     const req = `/IPlayerService/GetOwnedGames/v0001/`
     const resp = await this.getRequest(req, {steamid: steamid, include_appinfo: include_appinfo, include_played_free_games: include_played_free_games, appids_filter: filter})
-    return resp.response || -1
+    return resp.response
   }
 }
 
