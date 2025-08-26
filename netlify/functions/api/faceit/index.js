@@ -4,12 +4,6 @@ class Faceit {
   constructor() {
     configDotenv()
     this.apiKey = process.env.FACEIT_API_KEY
-    this.axiosInstance = axios.create({
-      baseURL: "https://open.faceit.com/data/v4",
-      headers: {
-        "Authorization": `Bearer ${this.apiKey}`
-      }
-    })
     this.fetchInstance = async (path, params = {}) => {
       const res = await fetch(`https://open.faceit.com/data/v4${path}`, {
         headers: {
