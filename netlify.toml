@@ -1,5 +1,2 @@
 [functions]
   node_bundler = "esbuild"
-
-[functions."index"]
-  external_node_modules = ["axios"]
