@@ -112,16 +112,15 @@ export class Faceit extends Format {
       let kills = []
       let deaths = []
       let rounds = []
-      let duration = []
       for (let match of this.content.items) {
         let currentMatch = match.stats
         // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
-        kills.push(parseInt(currentMatch.kills))
-        deaths.push(parseInt(currentMatch.deaths))
-        rounds.push(parseInt(currentMatch.rounds))
-        duration.push((parseInt(currentMatch.match_finished_at)*1000-parseInt(currentMatch.created_at)*1000)/60)
+        res += `${currentMatch.Map} - ${currentMatch.Score} | ${1 === parseInt(currentMatch.Result) ? "**Win**" : "**Loss**"}\n`
+        kills.push(parseInt(currentMatch.Kills))
+        deaths.push(parseInt(currentMatch.Deaths))
+        rounds.push(parseInt(currentMatch.Rounds))
       }
-      res += `**Average Kills**: ${(kills.reduce((a, b) => a + b, 0)) / kills.length}\n**Average Deaths**: ${(deaths.reduce((a, b) => a + b, 0)) / deaths.length}\n**Average Rounds**: ${(rounds.reduce((a, b) => a + b, 0)) / rounds.length}\n**Average Duration**: ${(duration.reduce((a, b) => a + b, 0)) / duration.length} minutes\n\n`
+      res += `**Average Kills**: ${(kills.reduce((a, b) => a + b, 0)) / kills.length}\n**Average Deaths**: ${(deaths.reduce((a, b) => a + b, 0)) / deaths.length}\n**Average Rounds**: ${(rounds.reduce((a, b) => a + b, 0)) / rounds.length}\n\n`
       return res
     } catch (err) {
       return "No match stats found or profile is private.\n"
@@ -134,9 +133,10 @@ export class Faceit extends Format {
       let duration = []
       for (let match of this.content.items) {
         // res += `**Match ID**: ${match.match_id}\n**Map**: ${match.map}\n**Score**: ${match.score}\n**Result**: ${1 === match.result ? "**Win**" : "**Loss**"}\n**Kills**: ${match.kills}\n**Deaths**: ${match.deaths}\n**Assists**: ${match.assists}\n**ADR**: ${match.adr}\n**K/D Ratio**: ${match.kills / match.deaths}\n**K/R Ratio**: ${match.kills / match.rounds}\n**Double Kills**: ${match.double_kills}\n**Triple Kills**: ${match.triple_kills}\n**Quadro Kills**: ${match.quadro_kills}\n**Penta Kills**: ${match.penta_kills}\n**Duration**: ${(match.match_finished_at*1000-match.created_at*1000)/60} minutes\n\n`
-        duration.push((parseInt(match.match_finished_at)*1000-parseInt(match.created_at)*1000)/60)
+        res += `${match.teams.faction1.nickname} ${match.results.score.faction1} - ${match.results.score.faction2} ${match.teams.faction2.nickname}\n`
+        duration.push((parseInt(match.finished_at)-parseInt(match.started_at))/60);
       }
-      res += `**Average Duration**: ${(duration.reduce((a, b) => a + b, 0)) / duration.length} minutes\n\n`
+      res += `\n**Average Duration**: ${Math.floor((duration.reduce((a, b) => a + b, 0)) / duration.length)} minutes\n\n`
       return res
     } catch (err) {
       return "No match stats found or profile is private.\n"
