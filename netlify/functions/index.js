@@ -2,12 +2,13 @@ import { Telegraf, Markup } from "telegraf";
 import { configDotenv } from "dotenv";
 
 import { Steam, Faceit } from "./core/format.js";
-import {SteamAPIv1, SteamAPIv2} from "./api/steam/index.js";
-import {PlayersAPI, RankingsAPI} from "./api/faceit/index.js";
+import { TelegramConstantMessages } from "./core/messages.js";
+import { SteamAPIv1, SteamAPIv2 } from "./api/steam/index.js";
+import { PlayersAPI, RankingsAPI } from "./api/faceit/index.js";
 
 configDotenv();
 
-const bot = new Telegraf(process.env.TELEGRAM_TOKEN, { parse_mode: "Markdown" });
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const steamAPI = {
   v1: new SteamAPIv1(),
   v2: new SteamAPIv2()
@@ -16,6 +17,8 @@ const faceitAPI = {
   players: new PlayersAPI(),
   rankings: new RankingsAPI()
 }
+
+const tgm = new TelegramConstantMessages();
 
 const formatLocal = (content) => {
   const steam = new Steam(content)
@@ -36,19 +39,19 @@ const formatLocal = (content) => {
 }
 
 bot.start(async ctx => {
-  await ctx.reply(`Give me link to Steam account for send stats.\nSend link to steam account and receive info about faceit account\n[#] Commands:\n/faceit_nickname [nickname] (without space) ex: /faceit_nickname deko-_-\n/steam_nickname [nickname] (without space) ex: /steam_nickname grteamboss`)
+  await ctx.reply(tgm.START);
 })
 
 bot.help(async ctx => {
-  await ctx.reply("Commands:\n/donate\n/help\n/about\n/faceit_nickname [nickname] (without space) ex: /faceit_nickname deko-_-\n/faceit_id [id] (without space) ex: /faceit_id 12345678-1234-1234-1234-123456789012\n/faceit_recent_matches [nickname] (without space) ex: /faceit_recent_matches deko-_-\n/faceit_history [nickname] (without space) ex: /faceit_history deko-_-\n/faceit_ranking [game] [region] ex: /faceit_ranking cs2 EU\n/faceit_player_rank [game] [region] [playerId or profile link] ex: /faceit_player_rank cs2 EU deko-_- or /faceit_player_rank cs2 EU 12345678-1234-1234-1234-123456789012 or /faceit_player_rank cs2 EU https://www.faceit.com/en/players/deko-_-\n\n/steam_player_info [nickname or profile link or steamID64] (without space) ex: /steam_player_info grteamboss or /steam_player_info https://steamcommunity.com/id/grteamboss or /steam_player_info 76561198034392384\n/steam_played_games [nickname or profile link or steamID64] (without space) ex: /steam_played_games grteamboss or /steam_played_games https://steamcommunity.com/id/grteamboss or /steam_played_games 76561198034392384\n/steam_friend_list [nickname or profile link or steamID64] (without space) ex: /steam_friend_list grteamboss or /steam_friend_list https://steamcommunity.com/id/grteamboss or /steam_friend_list 76561198034392384\n/steam_owned_games [nickname or profile link or steamID64] (without space) ex: /steam_owned_games grteamboss or /steam_owned_games https://steamcommunity.com/id/grteamboss or /steam_owned_games 76561198034392384\n\nOr just send me link to Steam account and receive info about faceit account")
+  await ctx.reply(tgm.HELP);
 })
 
 bot.command("donate", async ctx => {
-  await ctx.reply("If you want to support the development of this bot, you can donate via [DonationAlerts](https://www.donationalerts.com/grteamboss).\nThank you!")
+  await ctx.reply(tgm.DONATE);
 })
 
 bot.command("about", async ctx => {
-  await ctx.reply("This bot was created by grteamboss\(dev account\).\nYou can find the source code on [GitHub](https://github.com/grteamboss/faceit_webapp_telegram_bot).")
+  await ctx.reply(tgm.ABOUT);
 })
 
 // Steam
