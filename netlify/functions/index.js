@@ -1,8 +1,9 @@
 import { Telegraf } from "telegraf";
 import { configDotenv } from "dotenv";
 
-import { Steam, Faceit, TelegramConstantMessages } from "./core";
+import { Steam, Faceit } from "./core";
 import { PlayersAPI, RankingsAPI, SteamAPIv1, SteamAPIv2 } from "./api"
+import { TelegramConstantMessages } from "./core/message/messages.js"
 
 configDotenv();
 
@@ -15,7 +16,7 @@ const faceitAPI = {
   players: new PlayersAPI(),
   rankings: new RankingsAPI()
 }
-const tgm = TelegramConstantMessages();
+const tgm = new TelegramConstantMessages();
 
 const formatLocal = (content) => {
   const steam = new Steam(content)
