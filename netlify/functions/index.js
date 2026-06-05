@@ -1,9 +1,8 @@
 import { Telegraf } from "telegraf";
 import { configDotenv } from "dotenv";
 
-import { Steam, Faceit } from "./core";
+import { Steam, Faceit, TelegramConstantMessages } from "./core/message";
 import { PlayersAPI, RankingsAPI, SteamAPIv1, SteamAPIv2 } from "./api"
-import TelegramConstantMessages from "./core/message/messages.js"
 
 configDotenv();
 
