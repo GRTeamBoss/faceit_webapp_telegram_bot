@@ -15,7 +15,7 @@ const faceitAPI = {
   players: new PlayersAPI(),
   rankings: new RankingsAPI()
 }
-const tgm = new TelegramConstantMessages();
+const tgm = TelegramConstantMessages();
 
 const formatLocal = (content) => {
   const steam = new Steam(content)
