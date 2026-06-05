@@ -243,7 +243,7 @@ bot.hears(/https\:\/\/steamcommunity\.com\/.+/, async ctx => {
 
 // Inline
 
-bot.inlineQuery(async (ctx) => {
+bot.on("inline_query", async (ctx) => {
   const query = ctx.inlineQuery.query;
 
   const queryList = String(query).split(" ");
@@ -252,8 +252,8 @@ bot.inlineQuery(async (ctx) => {
       const faceitNickname = queryList.slice(1)
       const data = await faceitAPI.players.getPlayerviaNickname(faceitNickname)
       if (data === -1) {
-        await ctx.answerInlineQuery([{
-          type: "Article",
+        return await ctx.answerInlineQuery([{
+          type: "article",
           title: "Not found",
           id: "1",
           description: `${faceitNickname} faceit nickname not found!`,
@@ -262,11 +262,12 @@ bot.inlineQuery(async (ctx) => {
           }
         }])
       } else {
-        await ctx.answerInlineQuery([{
-          type: "Article",
+        return await ctx.answerInlineQuery([{
+          type: "article",
           title: `${faceitNickname}`,
           id: "1",
           description: `${data.games.cs2.faceit_elo}`,
+          thumb_url: `${data.avatar}`,
           input_message_content: {
             message_text: `${data.games.cs2.faceit_elo}`
           }
