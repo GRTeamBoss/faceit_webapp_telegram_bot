@@ -1,24 +1,18 @@
 import { configDotenv } from "dotenv";
+import { Request } from "./../../core/request"
 
 class Faceit {
   constructor() {
     configDotenv()
     this.apiKey = process.env.FACEIT_API_TOKEN
-    this.fetchInstance = async (path, params = {}) => {
-      const paramsQuery = new URLSearchParams(params).toString()
-      const res = await fetch(`https://open.faceit.com/data/v4${path}${paramsQuery ? `?${paramsQuery}` : ""}`, {
-        headers: {
-          "Authorization": `Bearer ${this.apiKey}`
-        }
-      })
-      if (!res.ok) {return -1}
-      return await res.json()
-    }
+    this.path = "https://open.faceit.com/data/v4"
+    this.header = {"Authorization": `Bearer ${this.apiKey}`} 
   }
 
   async getRequest(endpoint, params = {}) {
-      const response = await this.fetchInstance(endpoint, params)
-      return response
+    const request = new Request()
+    const response = await request.get(this.path, endpoint, params, this.header)
+    return response
   }
 }
 

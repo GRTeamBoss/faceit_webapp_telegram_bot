@@ -1,10 +1,8 @@
-import { Telegraf, Markup } from "telegraf";
+import { Telegraf } from "telegraf";
 import { configDotenv } from "dotenv";
 
-import { Steam, Faceit } from "./core/format.js";
-import { TelegramConstantMessages } from "./core/messages.js";
-import { SteamAPIv1, SteamAPIv2 } from "./api/steam/index.js";
-import { PlayersAPI, RankingsAPI } from "./api/faceit/index.js";
+import { Steam, Faceit, TelegramConstantMessages } from "./core";
+import { PlayersAPI, RankingsAPI, SteamAPIv1, SteamAPIv2 } from "./api"
 
 configDotenv();
 
@@ -17,7 +15,6 @@ const faceitAPI = {
   players: new PlayersAPI(),
   rankings: new RankingsAPI()
 }
-
 const tgm = new TelegramConstantMessages();
 
 const formatLocal = (content) => {
@@ -58,19 +55,19 @@ bot.command("about", async ctx => {
 
 bot.command("steam_player_info", async ctx => {
   if (ctx.message.text.split(" ").slice(1).length > 1) {
-    await ctx.reply(`/steam_player_info ${ctx.message.text.split(" ").slice(1).join("")} - without space!`)
+    await ctx.reply(`**/steam_player_info ${ctx.message.text.split(" ").slice(1).join("")}** - without space!`, {parse_mode: "MarkdownV2"})
   } else {
     const steamID64 = await steamAPI.v1.getPlayerSteamID64(ctx.message.text.split(" ")[1])
     const data = await steamAPI.v2.getPlayerSummaries(ctx.message.text.split(" ")[1])
     if (steamID64 !== -1) {
       const playerData = await steamAPI.v2.getPlayerSummaries(steamID64)
       const result = await formatLocal(playerData).playerSummaries()
-      await ctx.replyWithPhoto({url: playerData.avatar}, {caption: String(result)})
+      await ctx.replyWithPhoto({url: playerData.avatar}, {caption: String(result), parse_mode: "MarkdownV2"})
     } else if (data !== -1) {
       const result = await formatLocal(data).playerSummaries()
-      await ctx.replyWithPhoto({url: data.avatar}, {caption: String(result)})
+      await ctx.replyWithPhoto({url: data.avatar}, {caption: String(result), parse_mode: "MarkdownV2"})
     } else {
-      await ctx.reply(`${ctx.message.text.split(" ")[1]} steam profile not found on Steam!`)
+      await ctx.reply(`**${ctx.message.text.split(" ")[1]}** steam profile not found on Steam!`, {parse_mode: "MarkdownV2"})
     }
   }
 })
@@ -227,22 +224,57 @@ bot.command("faceit_player_rank", async ctx => {
 
 bot.hears(/https\:\/\/steamcommunity\.com\/.+/, async ctx => {
   const steamID64 = await steamAPI.v1.getPlayerSteamID64(ctx.message.text.split("https://steamcommunity.com/")[1].replace(/\/(.*)/, ""))
-  if (steamID64 === -1) {
-    await ctx.reply(`${ctx.message.text.split(" ")[1]} steam nickname not found! Trying to find if this SteamID64.`)
+  if (steamID64 === -1) { 
+    await ctx.reply(`${ctx.message.text} steam profile not found. Trying get info if this not nickname.`)
+    steamID64 = ctx.message.text.split("https://steamcommunity.com/")[1].replace(/\/(.*)/, "")
+  }
+  
+  const faceitStats = await faceitAPI.players.getPlayerviaID(steamID64)
+  if (faceitStats === -1) {
+    await ctx.reply(`${ctx.message.text} steam ID not found on Faceit!`)
   } else {
-    const faceitStats = await faceitAPI.players.getPlayerviaID(steamID64)
-    if (faceitStats === -1) {
-      await ctx.reply(`${ctx.message.text.split(" ")[1]} steam ID not found on Faceit!`)
-    } else {
-      const img = faceitStats.avatar
-      const cs2form = await formatLocal.cs2(faceitStats.games.cs2) || "CS2 history doesn't exist."
-      const csgoform = await formatLocal.csgo(faceitStats.games.csgo) || "CS:GO history doesn't exist."
-      const generalform = await formatLocal.faceitGeneral(faceitStats)
-      await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
-    }
+    const img = faceitStats.avatar
+    const cs2form = await formatLocal.cs2(faceitStats.games.cs2) || "CS2 history doesn't exist."
+    const csgoform = await formatLocal.csgo(faceitStats.games.csgo) || "CS:GO history doesn't exist."
+    const generalform = await formatLocal.faceitGeneral(faceitStats)
+    await ctx.replyWithPhoto({url: img}, {caption: String(generalform + cs2form + csgoform)})
   }
 })
 
+// Inline
+
+bot.inlineQuery(async (ctx) => {
+  const query = ctx.inlineQuery.query;
+
+  const queryList = String(query).split(" ");
+  if (queryList.length == 2) {
+    if (queryList[0] == "faceit") {
+      const faceitNickname = queryList.slice(1)
+      const data = await faceitAPI.players.getPlayerviaNickname(faceitNickname)
+      if (data === -1) {
+        await ctx.answerInlineQuery([{
+          type: "Article",
+          title: "Not found",
+          id: "1",
+          description: `${faceitNickname} faceit nickname not found!`,
+          input_message_content: {
+            message_text: `${faceitNickname} faceit nickname not found!`
+          }
+        }])
+      } else {
+        await ctx.answerInlineQuery([{
+          type: "Article",
+          title: `${faceitNickname}`,
+          id: "1",
+          description: `${data.games.cs2.faceit_elo}`,
+          input_message_content: {
+            message_text: `${data.games.cs2.faceit_elo}`
+          }
+        }])
+      }
+    }
+  }
+})
 
 
 exports.handler = async function(event, context) {

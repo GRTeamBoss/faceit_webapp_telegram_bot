@@ -1,4 +1,5 @@
 import { configDotenv } from "dotenv"
+import { Request } from "./../../core/request"
 
 class Steam {
   /**
@@ -8,20 +9,17 @@ class Steam {
   constructor() {
     configDotenv()
     this.apiKey = process.env.STEAM_API_TOKEN
+    this.path = "https://api.steampowered.com"
     this.params = {
       key: this.apiKey,
     }
-    this.fetchInstance = async (path, params = {}) => {
-      const paramsQuery = new URLSearchParams({...this.params, ...params}).toString()
-      const res = await fetch(`https://api.steampowered.com${path}${paramsQuery ? `?${paramsQuery}` : ""}`)
-      if (!res.ok) {return -1}
-      return await res.json()
-    }
   }
 
-  async getRequest(req, params = {}) {
-    const resp = await this.fetchInstance(req, params)
-    return resp
+  async getRequest(endpoint, params = {}) {
+    const request = new Request()
+    const paramsQuery = new URLSearchParams({...this.params, ...params}).toString()
+    const response = await request.get(this.path, endpoint, params, {})
+    return response
   }
 }
 
