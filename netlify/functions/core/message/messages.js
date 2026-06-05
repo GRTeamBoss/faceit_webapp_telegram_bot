@@ -28,4 +28,6 @@ TON(V4) - UQDHv1DBOdVOPFGQ50zzcrf1nCPgJKLgRDgUpuWskZWC_r-4\n
 Thank you!`
   ABOUT = `This bot was created by @saidovjasur.\n
 You can find the source code on [GitHub](https://github.com/grteamboss/faceit_webapp_telegram_bot).`
+
+  constructor() {}
 }
