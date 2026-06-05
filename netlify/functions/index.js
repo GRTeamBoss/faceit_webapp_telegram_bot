@@ -274,6 +274,16 @@ bot.on("inline_query", async (ctx) => {
         }])
       }
     }
+  } else {
+    return await ctx.answerInlineQuery([{
+      type: "article",
+      title: "Wrong request",
+      id: "1",
+      description: `${query} must be like => faceit deko-_-`,
+      input_message_content: {
+        message_text: `${query} must be like => faceit deko-_-`
+      }
+    }])
   }
 })
 
