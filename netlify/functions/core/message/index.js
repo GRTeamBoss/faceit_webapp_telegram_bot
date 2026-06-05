@@ -1,2 +1,2 @@
 export { Steam, Faceit } from "./format.js"
-export { default as TelegramConstantMessages } from "./messages.js"
+export { TelegramConstantMessages } from "./messages.js"

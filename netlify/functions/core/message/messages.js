@@ -1,8 +1,4 @@
-export default class TelegramConstantMessages {
-
-  constructor() {
-    this.default = 0;
-  }
+export class TelegramConstantMessages {
   
   START = `Give me link to Steam account for send stats.\n
   Send link to steam account and receive info about faceit account\n
