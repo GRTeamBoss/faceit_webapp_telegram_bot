@@ -3,7 +3,7 @@ import { configDotenv } from "dotenv";
 
 import { Steam, Faceit } from "./core";
 import { PlayersAPI, RankingsAPI, SteamAPIv1, SteamAPIv2 } from "./api"
-import { TelegramConstantMessages } from "./core/message/messages.js"
+import TelegramConstantMessages from "./core/message/messages.js"
 
 configDotenv();
 
